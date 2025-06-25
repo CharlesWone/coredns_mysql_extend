@@ -148,7 +148,7 @@ func (m *Mysql) parseConfig(c *caddy.Controller) error {
 func (m *Mysql) createTables() {
 	_, err := m.db.Exec(`
         CREATE TABLE IF NOT EXISTS ` + m.zonesTable + ` (
-            id INT NOT NULL AUTO_INCREMENT,
+            id BIGINT NOT NULL,
             zone_name VARCHAR(255) NOT NULL,
             PRIMARY KEY (id),
             UNIQUE KEY (zone_name)
@@ -163,15 +163,14 @@ func (m *Mysql) createTables() {
 
 	_, err = m.db.Exec(`
         CREATE TABLE IF NOT EXISTS ` + m.recordsTable + ` (
-            id INT NOT NULL AUTO_INCREMENT,
-            zone_id INT NOT NULL,
+            id BIGINT NOT NULL,
+            zone_id BIGINT NOT NULL,
             hostname VARCHAR(512) NOT NULL,
             type VARCHAR(10) NOT NULL,
             data VARCHAR(1024) NOT NULL,
             ttl INT NOT NULL DEFAULT 120,
 			online INT NOT NULL DEFAULT 0,
-            PRIMARY KEY (id),
-            FOREIGN KEY (zone_id) REFERENCES ` + m.zonesTable + `(id)
+            PRIMARY KEY (id)
         );
     `)
 	if err != nil {
