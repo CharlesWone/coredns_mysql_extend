@@ -169,7 +169,7 @@ func (m *Mysql) createTables() {
             type VARCHAR(10) NOT NULL,
             data VARCHAR(1024) NOT NULL,
             ttl INT NOT NULL DEFAULT 120,
-			online INT NOT NULL DEFAULT 0,
+			online BIT NOT NULL DEFAULT 0,
             PRIMARY KEY (id)
         );
     `)
